@@ -8,4 +8,4 @@ from .lesson import Lesson
 
 from .group import Group
 
-# from .lesson_members import Schedule
+# from .lesson_members import LessonMembersAssoc
