@@ -17,7 +17,17 @@ class Registration(StatesGroup):
     name = State()
     type = State()
 
-users = {}
+class Lesson(StatesGroup):
+    date = State()
+    
+
+users = {"Нечитайло Нікіта":{"name": "Нечитайло Нікіта",
+                             "type": "Student",
+                             "group": "PYTHON_1y_23_03_10_23"}}
+
+groups = {"PYTHON_1y_23_03_10_23":{"lessons":{"01.08.2024":{"members": {"Нечитайло Нікіта": "5",
+                                                                        "Леонід Лісовский": "4"}
+                                                                                            }}}}
 
 
 bot = Bot(token="6825649894:AAGQBedlfzs5tWHzTzuWMczE1JRzgMNTNZ0")
@@ -74,13 +84,48 @@ async def get_age(message: types.Message, state: FSMContext):
     await state.clear()
     name = data.get('name')
     type = data.get('type')
-                
-                
-    await message.answer(f"Registration succesfully ended.\n"
+    if name in users:
+        user = users.get(name)
+        type_check = user.get("type")
+        if type_check == type:
+            user_repaired = users.pop(name)
+            users[user_id] = user_repaired
+            await message.answer(f"Registration succesfully ended.\n"
                                      f"Name: {name}\n"
                                      f"Type: {type}")
-    users[user_id] = {"Name" : {name},
-                      "Type" : {type}}
+        else:
+            await message.answer(f"You are not:{type}")
+
+    else:
+        await message.answer("Sorry,we don't know you:(")
+                
+                
+@dp.message(Command("see_stars"))
+async def see_stars(message: Message,state: FSMContext):  
+    chat_id = message.from_user.id
+    user = users.get(chat_id)
+    name = user.get("name")
+    group = user.get("group")
+    await message.answer(f"Your group:{group}\nGive the date of the lesson:")
+    await state.set_state(Lesson.date)
+    
+    #if name in lesson:
+        #stars_count = lesson.get(name)
+        #await message.answer(f"Your star count:{stars_count}")
+
+
+@dp.message(Lesson.date)
+async def get_stars_count(message: types.Message, state: FSMContext):
+    chat_id = message.from_user.id
+    user = users.get(chat_id)
+    name = user.get("name")
+    group = user.get("group")
+    date = message.text
+    lesson = groups.get(group).get("lessons").get(date).get("members")
+    if name in lesson:
+        star_count = lesson.get(name)
+        await message.answer(f"Your star count: {star_count}")
+
 
 
 @dp.message(Command("see_profile"))
@@ -88,6 +133,7 @@ async def see_profile(message: Message,state: FSMContext):
     chat_id = message.from_user.id
     user = users.get(chat_id)
     await message.answer(f"{user}")
+    
 
 
 async def main() -> None:
@@ -97,4 +143,5 @@ async def main() -> None:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     asyncio.run(main())
+
 
