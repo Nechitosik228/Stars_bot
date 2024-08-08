@@ -6,6 +6,7 @@ from .models import (
     Member,
     Role,
     Topic,
+    DB_MODELS,
 )
 
 
@@ -31,8 +32,9 @@ def get_db():
 
 
 def get_model(name: str = "") -> type | None:
-    global_models = globals()
-    if name in global_models:
-        model = global_models.get(name)
+    db_models = DB_MODELS
+
+    if name in db_models:
+        model = db_models.get(name)
         if issubclass(model, Config.BASE):
             return model

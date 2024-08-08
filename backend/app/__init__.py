@@ -34,18 +34,13 @@ db_crud_router = APIRouter()
 # def init_pydantic_models():
 pydantic_models = generate_pydantic_models(
     Config.BASE.metadata,
-    # "Base",
-    base_model_exclude_columns=[
-        "id",
-    ],
-    exclude_tables=[
-        "user",
-    ],
 )
-
 for router in generate_crud_routers(pydantic_models):
     db_crud_router.include_router(router)
 
+
+# logger.info(router)
+# exit()
 
 # init_pydantic_models()
 # app.include_router(appeals_router)
