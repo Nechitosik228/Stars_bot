@@ -7,6 +7,6 @@ from sqlalchemy.orm import (
 
 
 class Config:
-    ENGINE = create_engine("sqlite://", echo=True)
+    ENGINE = create_engine("sqlite+pysqlite:///mydb.db", echo=True)
     SESSION = sessionmaker(ENGINE)
     BASE = declarative_base()
