@@ -56,5 +56,8 @@ async def add_wrong_request_path_redirect(request: Request, call_next):
         response = await call_next(request)
         logger.info(f"{request.client} : {request.url} -> {response.status_code}")
     else:
-        response = RedirectResponse(PATH_LIST[-1])
+        #  response = RedirectResponse(PATH_LIST[-1])
+         response = RedirectResponse("/docs")
     return response
+
+
