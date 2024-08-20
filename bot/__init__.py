@@ -1,9 +1,11 @@
 import sys
+from os import getenv
 from aiogram.fsm.context import FSMContext
 import logging
 import asyncio
 from aiogram.fsm.state import State, StatesGroup
 from enum import Enum
+from requests import get
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.enums import ParseMode
@@ -13,9 +15,17 @@ from aiogram.types import (
     Message,
     ReactionTypeEmoji
 )
+
+
+BASE_BACKEND_URL =f'http://{getenv("API_HOST")}:{getenv("API_PORT")}'  
+
+
+
 class Registration(StatesGroup):
     name = State()
     type = State()
+
+
 
 class Lesson(StatesGroup):
     date = State()
@@ -126,14 +136,18 @@ async def get_age(message: types.Message, state: FSMContext):
 
 
                 
-@dp.message(Command("see_stars"))
-async def see_stars(message: Message,state: FSMContext):  
-    chat_id = message.from_user.id
-    user = users.get(chat_id)
-    name = user.get("name")
-    group = user.get("group")
-    await message.answer(f"Your group:{group}\nGive the date of the lesson:")
-    await state.set_state(Lesson.date)
+@dp.message(Command("see_members"))
+async def see_members(message: Message): 
+    url = BASE_BACKEND_URL + "/members"
+    response = get(url=url)
+    data = response.json() 
+    print(f"{data=}")
+    # chat_id = message.from_user.id
+    # user = users.get(chat_id)
+    # name = user.get("name")
+    # group = user.get("group")
+    await message.answer(f"Your group:{data}\nGive the date of the lesson:")
+    
     
 
 

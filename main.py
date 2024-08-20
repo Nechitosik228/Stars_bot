@@ -1,7 +1,7 @@
 from os import getenv
 
 from dotenv import load_dotenv
-from uvicorn import run
+from uvicorn import run, Server, Config
 import asyncio
 from backend import app
 from bot import dp, bot
@@ -9,8 +9,11 @@ from bot import dp, bot
 
 
 async def run_backend():
-    await asyncio.sleep(1.5)
-    run(app=app, host=getenv("API_HOST"), port=int(getenv("API_PORT")))
+    config = Config(app=app, host=getenv("API_HOST"), port=int(getenv("API_PORT")))
+    server = Server(config)
+    await server.serve()
+    # await asyncio.sleep(1.5)
+    # await run(app=app, host=getenv("API_HOST"), port=int(getenv("API_PORT")))
 
 
 async def run_bot():
