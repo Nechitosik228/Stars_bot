@@ -1,5 +1,7 @@
+import logging
 from os import getenv
-
+import sys
+from loguru import logger
 from dotenv import load_dotenv
 from uvicorn import run, Server, Config
 import asyncio
@@ -11,8 +13,6 @@ async def run_backend():
     config = Config(app=app, host=getenv("API_HOST"), port=int(getenv("API_PORT")))
     server = Server(config)
     await server.serve()
-    # await asyncio.sleep(1.5)
-    # await run(app=app, host=getenv("API_HOST"), port=int(getenv("API_PORT")))
 
 
 async def run_bot():
@@ -20,6 +20,8 @@ async def run_bot():
 
 
 async def main():
+    # logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+
     load_dotenv()
     backend_task = asyncio.create_task(run_backend())
     bot_task = asyncio.create_task(run_bot())
