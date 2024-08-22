@@ -7,7 +7,6 @@ from backend import app
 from bot import dp, bot
 
 
-
 async def run_backend():
     config = Config(app=app, host=getenv("API_HOST"), port=int(getenv("API_PORT")))
     server = Server(config)
@@ -18,7 +17,6 @@ async def run_backend():
 
 async def run_bot():
     await dp.start_polling(bot)
-    return dp
 
 
 async def main():
