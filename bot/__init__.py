@@ -1,6 +1,7 @@
 import sys
 from os import getenv
 from aiogram.fsm.context import FSMContext
+from dotenv import load_dotenv
 import logging
 import asyncio
 from aiogram.fsm.state import State, StatesGroup
@@ -15,6 +16,9 @@ from aiogram.types import (
     Message,
     ReactionTypeEmoji,
 )
+
+
+load_dotenv()
 
 
 BASE_BACKEND_URL = f'http://{getenv("API_HOST")}:{getenv("API_PORT")}'
@@ -131,6 +135,48 @@ async def get_age(message: types.Message, state: FSMContext):
         await message.answer("Sorry,we don't know you:(")
 
 
+
+#Roles
+
+
+@dp.message(Command("see_roles"))
+async def see_roles(message: Message):
+    ...
+
+
+
+@dp.message(Command("create_role"))
+async def create_role(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_roles"))
+async def delete_roles(message: Message):
+    ...
+
+
+
+@dp.message(Command("see_role"))
+async def see_role(message: Message):
+    ...
+
+
+
+@dp.message(Command("update_role"))
+async def see_roles(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_role"))
+async def see_roles(message: Message):
+    ...
+
+
+#Members
+
+
 @dp.message(Command("see_members"))
 async def see_members(message: Message):
     url = BASE_BACKEND_URL + "/members"
@@ -142,6 +188,157 @@ async def see_members(message: Message):
     # name = user.get("name")
     # group = user.get("group")
     await message.answer(f"Your group:{data}\nGive the date of the lesson:")
+
+
+
+@dp.message(Command("create_member"))
+async def create_member(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_members"))
+async def delete_members(message: Message):
+    ...
+
+
+
+@dp.message(Command("see_member"))
+async def see_member(message: Message):
+    ...
+
+
+
+@dp.message(Command("update_member"))
+async def update_member(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_member"))
+async def delete_member(message: Message):
+    ...
+
+
+
+#Topics
+
+
+
+@dp.message(Command("see_topics"))
+async def see_topics(message: Message):
+    ...
+
+
+
+@dp.message(Command("create_topic"))
+async def create_topic(message: Message):
+    ...    
+
+
+
+@dp.message(Command("delete_topics"))
+async def delete_topics(message: Message):
+    ...
+
+
+
+@dp.message(Command("see_topic"))
+async def see_topic(message: Message):
+    ...
+
+
+
+@dp.message(Command("update_topic"))
+async def update_topic(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_topic"))
+async def delete_topic(message: Message):
+    ...
+
+
+#Lessons
+
+
+
+@dp.message(Command("see_lessons"))
+async def see_lessons(message: Message):
+    ...
+
+
+
+@dp.message(Command("create_lesson"))
+async def create_lesson(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_lessons"))
+async def delete_lessons(message: Message):
+    ...
+
+
+
+@dp.message(Command("see_lesson"))
+async def see_lesson(message: Message):
+    ...
+
+
+
+@dp.message(Command("update_lesson"))
+async def update_lesson(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_lesson"))
+async def delete_lesson(message: Message):
+    ...
+
+
+# Groups
+
+
+@dp.message(Command("see_groups"))
+async def see_groups(message: Message):
+    ...
+
+
+
+@dp.message(Command("create_group"))
+async def create_group(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_groups"))
+async def delete_groups(message: Message):
+    ...
+
+
+
+@dp.message(Command("see_group"))
+async def see_group(message: Message):
+    ...
+
+
+
+@dp.message(Command("update_group"))
+async def update_group(message: Message):
+    ...
+
+
+
+@dp.message(Command("delete_group"))
+async def delete_group(message: Message):
+    ...
+
+
+
+
 
 
 @dp.message(Lesson.date)
