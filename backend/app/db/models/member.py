@@ -10,11 +10,8 @@ class Member(Config.BASE):
     name: Mapped[str]
     telegram_id: Mapped[int]
 
-    role: Mapped["Role"] = relationship()
-    role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
-
-    group: Mapped["Group"] = relationship(back_populates="students")
-    group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"))
+    
+    
 
 
 # + name: str

@@ -16,6 +16,7 @@ async def run_backend():
 
 
 async def run_bot():
+    logger.info("Bot starting")
     await dp.start_polling(bot)
 
 
