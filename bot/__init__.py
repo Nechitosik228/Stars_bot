@@ -18,6 +18,7 @@ from aiogram.types import (
     ReplyKeyboardMarkup,
     Message,
     ReactionTypeEmoji,
+    CallbackQuery
 )
 
 

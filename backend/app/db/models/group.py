@@ -10,4 +10,5 @@ class Group(Config.BASE):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
 
-    students: Mapped[List["Member"]] = relationship(back_populates="group")
+
+    member: Mapped[List["Member"]] = relationship(back_populates="group")
