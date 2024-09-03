@@ -11,3 +11,6 @@ class Topic(Config.BASE):
     name: Mapped[str]
 
     lessons: Mapped[List["Lesson"]] = relationship(back_populates="topic")
+    
+    group: Mapped["Group"] = relationship(back_populates="topic")
+    group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"))

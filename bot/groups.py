@@ -70,7 +70,7 @@ async def get_group_members(query: CallbackQuery,callback_data: GroupCallback):
 
     resp = await request_provider(url, method=Method.GET,body_or_params={"group_id":callback_data.index})
     keyboard = generate_members_kb(resp)
-    await query.message.answer("choose a member:",reply_markup=keyboard)
+    await query.message.answer("Choose a student:",reply_markup=keyboard)
 
 
 @dp.callback_query(F.data.startswith("add_new_member"))
@@ -79,12 +79,13 @@ async def get_member(query: CallbackQuery,state: FSMContext):
     await state.set_state(CreateMember.name)
 
 
-@dp.message(CreateMember.name)
-async def member_name(message: Message):
-    url = BASE_BACKEND_URL + "/members"
-    name = message.text
-    resp = await request_provider(url, method=Method.POST, body_or_params={"name": name})
-    print(f"{resp=}")
+@dp.callback_query(MemberCallback.filter())
+async def get_member(query: CallbackQuery, callback_data: MemberCallback):
+    name = callback_data.name
+    print(name)
+    await query.message.answer(f"Name:{name}")
+
+    
 
 
 @dp.message(Command("create_group"))

@@ -12,3 +12,5 @@ class Group(Config.BASE):
 
 
     member: Mapped[List["Member"]] = relationship(back_populates="group")
+
+    topic: Mapped["Topic"] = relationship(back_populates="group")

@@ -21,6 +21,9 @@ class CreateMember(StatesGroup):
 class SeeMember(StatesGroup):
     id = State() 
 
+class DeleteMember(StatesGroup):
+    id = State()
+
 @dp.message(Command("see_members"))
 async def see_members(message: Message):
     ...
@@ -84,5 +87,15 @@ async def update_member(message: Message):
 
 
 @dp.message(Command("delete_member"))
-async def delete_member(message: Message):
-    ...
+async def delete_member(message: Message, state: FSMContext):
+    await message.answer("Enter member id:")
+    await state.set_state(DeleteMember.id)
+
+
+@dp.message(DeleteMember.id)
+async def get_member_id(message: Message):
+    url = BASE_BACKEND_URL + "/members"
+    id = message.text
+    resp = await request_provider(url, method=Method.DELETE, body_or_params={"item_id": id})
+    print(resp)
+    await message.answer("Successfully deleted")
