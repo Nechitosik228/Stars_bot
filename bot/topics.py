@@ -65,13 +65,14 @@ async def create_topic(message: Message,state: FSMContext):
 
 
 @dp.message(Topic.name)
-async def get_topic_name(message: Message):
+async def get_topic_name(message: Message,state:FSMContext):
     url = BASE_BACKEND_URL + "/topics"
     name = message.text
     resp = await request_provider(url, method=Method.POST, body_or_params={"name":name,
                                                                            "group_id":1})
     print(resp)
     await message.answer("Successfully created")
+    await state.clear()
 
 
 
@@ -94,12 +95,14 @@ async def update_topic(message: Message,state:FSMContext):
 
 
 @dp.message(UpdateTopic.id)
-async def update_topic_id(message:Message):
+async def update_topic_id(message:Message,state:FSMContext):
     url = BASE_BACKEND_URL
     id = message.text
-    resp = await request_provider(url, method=Method.DELETE, body_or_params={"item_id":id})
+    int_id = id.isdigit()
+    resp = await request_provider(url, method=Method.DELETE, body_or_params={"item_id":int_id})
     print(resp)
     await message.answer("Successfully deleted")
+    await state.clear()
 
 
 

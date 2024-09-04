@@ -18,7 +18,7 @@ from .db import (
 )
 
 
-migrate()  # TODO: Comment this line in production
+# migrate()  # TODO: Comment this line in production
 
 app = FastAPI(
     title="Stars Portal API - ",  # TODO: Change the title and description

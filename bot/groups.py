@@ -1,3 +1,4 @@
+
 from . import (logging,
                Enum,
                FSMContext,
@@ -13,7 +14,8 @@ from . import (logging,
                Message,
                CallbackQuery,
                F,
-               )
+               ReplyKeyboardMarkup,
+               types)
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.filters.callback_data import CallbackData
 from .members import CreateMember
@@ -58,7 +60,7 @@ def generate_members_kb(members:list[dict[str:str]]):
     return builder.as_markup()
 
 @dp.message(Command("see_groups"))
-async def see_groups(message: Message, state:FSMContext):
+async def see_groups(message: Message):
     url = BASE_BACKEND_URL + "/groups"
     resp = await request_provider(url, method=Method.GET)
     keyboard = generate_groups_kb(resp)
@@ -81,9 +83,17 @@ async def get_member(query: CallbackQuery,state: FSMContext):
 
 @dp.callback_query(MemberCallback.filter())
 async def get_member(query: CallbackQuery, callback_data: MemberCallback):
+    
     name = callback_data.name
+    id = callback_data.index
     print(name)
-    await query.message.answer(f"Name:{name}")
+    kb = types.InlineKeyboardMarkup(row_width=2, inline_keyboard=[ 
+        [types.InlineKeyboardButton(text="Delete Member", callback_data="del_m")], 
+        [types.InlineKeyboardButton(text="Update Member", callback_data="upd_m")], 
+        ]) 
+                        
+                       
+    await query.message.answer(f"Name:{name}\nid:{id}\nChoose option",reply_markup=kb)
 
     
 
@@ -94,12 +104,13 @@ async def create_group(message: Message, state:FSMContext):
     await state.set_state(Group.name)
 
 @dp.message(Group.name)
-async def group_name(message: Message):
+async def group_name(message: Message,state:FSMContext):
     url = BASE_BACKEND_URL + "/groups"
     name = message.text
     resp = await request_provider(url, method=Method.POST, body_or_params={"name": name})
     print(f"{resp=}")
     await message.answer("Successfully created")
+    await state.clear()
 
 @dp.message(Command("delete_groups"))
 async def delete_groups(message: Message):
