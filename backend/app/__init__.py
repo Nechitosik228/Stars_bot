@@ -47,12 +47,14 @@ for router in generate_crud_routers(pydantic_models):
 app.include_router(db_crud_router)
 PATH_LIST = [x.path for x in app.routes]
 
+def base_url_endpoint(url):
+    return url.split("/")[1]
 
 @app.middleware("http")
 async def add_wrong_request_path_redirect(request: Request, call_next):
     print(request.headers)
     url = request.url.path
-    if url in PATH_LIST:
+    if base_url_endpoint(url) in [base_url_endpoint(x) for x in PATH_LIST]:
         response = await call_next(request)
         logger.info(f"{request.client} : {request.url} -> {response.status_code}")
     else:
