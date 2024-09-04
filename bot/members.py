@@ -34,6 +34,12 @@ class MemberCallback(CallbackData, prefix="member"):
     telegram_id: int
 
 
+class UpdateCallback(CallbackData, prefix="upd"):
+    name: str
+    index: int
+    telegram_id: int
+
+
 def generate_members_kb(members:list[dict[str:str]]):
     builder = InlineKeyboardBuilder()
     
@@ -45,6 +51,8 @@ def generate_members_kb(members:list[dict[str:str]]):
         builder.button(text=member_cb.name,callback_data=member_cb)
     builder.adjust(1,4,3,2,1)
     return builder.as_markup()
+
+
 
 
 
@@ -123,19 +131,18 @@ async def upd_get_member_id(query: CallbackQuery, callback_data: MemberCallback)
 
 
 @dp.message(Command("delete_member"))
-async def delete_member(message: Message):
-    url = BASE_BACKEND_URL + "/members"
-    resp = await request_provider(url, method=Method.GET)
-    keyboard = generate_members_kb(resp)
-    await message.answer("Choose a student to delete:",reply_markup=keyboard)
+async def delete_member(message: Message,state:FSMContext):
+    await message.answer("Enter id:")
+    await state.set_state(DeleteMember.id)
 
 
 
-@dp.callback_query(MemberCallback.filter())
-async def del_get_member_id(query: CallbackQuery, callback_data: MemberCallback):
-    url = BASE_BACKEND_URL + "/members/{item_id}"
-    id = callback_data.index
+@dp.message(DeleteMember.id)
+async def del_get_member_id(message: Message,state:FSMContext):
+    id = message.text
     print(id)
-    resp = await request_provider(url, method=Method.DELETE, body_or_params={"item_id": id})
+    url = BASE_BACKEND_URL + f"/members/{id}"
+    resp = await request_provider(url, method=Method.DELETE)
     print(resp)
-    await query.message.answer("Successfully deleted")
+    await message.answer("Successfully deleted")
+    await state.clear()
