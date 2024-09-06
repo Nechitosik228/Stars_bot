@@ -1,9 +1,5 @@
 
-from . import (logging,
-               Enum,
-               FSMContext,
-               load_dotenv,
-               logger,
+from . import (FSMContext,
                request_provider,
                Method,
                State,
@@ -14,16 +10,20 @@ from . import (logging,
                Message,
                CallbackQuery,
                F,
-               ReplyKeyboardMarkup,
                types)
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.filters.callback_data import CallbackData
-from .members import CreateMember
 
 
+class DeleteGroup(StatesGroup):
+    id = State()
 
 
-class Group(StatesGroup):
+class UpdateGroup(StatesGroup):
+    id = State()
+    name = State()
+
+class CreateGroup(StatesGroup):
     name = State()
 
 
@@ -38,9 +38,14 @@ class MemberCallback(CallbackData, prefix="member"):
     telegram_id: int
 
 
+class SeeGroup(StatesGroup):
+    id = State()
+
+
 def generate_groups_kb(groups:list[dict[str:str]]):
     builder = InlineKeyboardBuilder()
-    builder.adjust(4,3,2,1)
+    builder.adjust(1,4,3,2,1)
+    builder.button(text="Add new group",callback_data="add_new_group")
     for index,group in enumerate(groups):
         group_cb = GroupCallback(name=group.get("name"),index=index)
         builder.button(text=group_cb.name,callback_data=group_cb)
@@ -59,7 +64,7 @@ def generate_members_kb(members:list[dict[str:str]]):
     builder.adjust(1,4,3,2,1)
     return builder.as_markup()
 
-@dp.message(Command("see_groups"))
+@dp.message(Command("all_groups"))
 async def see_groups(message: Message):
     url = BASE_BACKEND_URL + "/groups"
     resp = await request_provider(url, method=Method.GET)
@@ -75,25 +80,18 @@ async def get_group_members(query: CallbackQuery,callback_data: GroupCallback):
     await query.message.answer("Choose a student:",reply_markup=keyboard)
 
 
-@dp.callback_query(F.data.startswith("add_new_member"))
-async def get_member(query: CallbackQuery,state: FSMContext):
-    await query.message.answer("Write the name of the student")
-    await state.set_state(CreateMember.name)
+
+
 
 
 @dp.callback_query(MemberCallback.filter())
 async def get_member(query: CallbackQuery, callback_data: MemberCallback):
-    
     name = callback_data.name
-    id = callback_data.index
-    print(name)
     kb = types.InlineKeyboardMarkup(row_width=2, inline_keyboard=[ 
         [types.InlineKeyboardButton(text="Delete Member", callback_data="del_m")], 
         [types.InlineKeyboardButton(text="Update Member", callback_data="upd_m")], 
         ]) 
-                        
-                       
-    await query.message.answer(f"Name:{name}\nid:{id}\nChoose option",reply_markup=kb)
+    await query.message.answer(f"Name:{name}\nChoose option",reply_markup=kb)
 
     
 
@@ -101,9 +99,13 @@ async def get_member(query: CallbackQuery, callback_data: MemberCallback):
 @dp.message(Command("create_group"))
 async def create_group(message: Message, state:FSMContext):
     await message.answer("Enter name of group:")
-    await state.set_state(Group.name)
+    await state.set_state(CreateGroup.name)
+@dp.callback_query(F.data.startswith("add_new_topic"))
+async def create_group_q(query: CallbackQuery, state: FSMContext):
+    await query.message.answer("Enter the name:")
+    await state.set_state(CreateGroup.name)
 
-@dp.message(Group.name)
+@dp.message(CreateGroup.name)
 async def group_name(message: Message,state:FSMContext):
     url = BASE_BACKEND_URL + "/groups"
     name = message.text
@@ -112,24 +114,83 @@ async def group_name(message: Message,state:FSMContext):
     await message.answer("Successfully created")
     await state.clear()
 
-@dp.message(Command("delete_groups"))
+@dp.message(Command("delete_all_groups"))
 async def delete_groups(message: Message):
-    ...
+    url = BASE_BACKEND_URL + "/groups"
+    await request_provider(url,method=Method.DELETE)
+    await message.answer("Successfully deleted")
 
 
 
-@dp.message(Command("see_group"))
-async def see_group(message: Message):
-    ...
+@dp.message(Command("see_one_group"))
+async def see_group(message: Message,state:FSMContext):
+    await message.answer("Enter id:")
+    await state.set_state(SeeGroup.id)
+
+
+@dp.message(SeeGroup.id)
+async def group_name(message: Message,state: FSMContext):
+    id = message.text
+    url = BASE_BACKEND_URL + f"/groups/{id}"
+    resp = await request_provider(url, method=Method.GET)
+    kb = types.InlineKeyboardMarkup(row_width=2, inline_keyboard=[ 
+        [types.InlineKeyboardButton(text="Delete group", callback_data="del_gr")], 
+        [types.InlineKeyboardButton(text="Update group", callback_data="upd_gr")], 
+        ])
+    await message.answer(f'id:{id}\nName:{resp.get("name")}\nchoose option:', reply_markup=kb)
+    await state.clear()
+
 
 
 
 @dp.message(Command("update_group"))
-async def update_group(message: Message):
-    ...
+async def update_group(message: Message, state: FSMContext):
+    await message.answer("Enter id:")
+    await state.set_state(UpdateGroup.id)
+@dp.callback_query(F.data.startswith("upd_g"))
+async def update_group(query: CallbackQuery, state: FSMContext):
+    await query.message.answer("Enter id:")
+    await state.set_state(UpdateGroup.id)
+
+
+@dp.message(UpdateGroup.id)
+async def upd_get_group_id(message: Message, state: FSMContext):
+    id = message.text
+    await state.update_data(id=id)
+    await message.answer("Enter new name:")
+    await state.set_state(UpdateGroup.name)
+
+
+@dp.message(UpdateGroup.name)
+async def upd_get_name(message:Message,state:FSMContext):
+    name = message.text
+    data = await state.update_data(name=name)
+    id = data.get("id")
+    url = BASE_BACKEND_URL + f"/groups/{id}"
+    resp = await request_provider(url, method=Method.PUT, body_or_params={"name":name})
+    print(resp)
+    await message.answer(f"Successfully updated:\nName:{name}")
+    await state.clear()
 
 
 
-@dp.message(Command("delete_group"))
-async def delete_group(message: Message):
-    ...
+
+@dp.message(Command("delete_one_group"))
+async def delete_group(message: Message,state:FSMContext):
+    await message.answer("Enter id:")
+    await state.set_state(DeleteGroup.id)
+@dp.callback_query(F.data.startswith("del_g"))
+async def delete_group(query: CallbackQuery,state:FSMContext):
+    await query.message.answer("Enter id:")
+    await state.set_state(DeleteGroup.id)
+
+
+@dp.message(DeleteGroup.id)
+async def del_get_group_id(message: Message,state:FSMContext):
+    id = message.text
+    print(id)
+    url = BASE_BACKEND_URL + f"/groups/{id}"
+    resp = await request_provider(url, method=Method.DELETE)
+    print(resp)
+    await message.answer("Successfully deleted")
+    await state.clear()

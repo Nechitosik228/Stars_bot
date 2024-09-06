@@ -50,64 +50,42 @@ from . import lessons,groups,members,topics,roles
 
 
 
-# @dp.message(Command("start"))
-# async def command_start(message: Message, state: FSMContext):
-#     name = ReplyKeyboardMarkup(
-#         keyboard=[
-#             [KeyboardButton(text=f"{message.from_user.first_name}")],
-#         ],
-#         resize_keyboard=True,
-#         one_time_keyboard=True,
-#     )
-#     await message.react([ReactionTypeEmoji(emoji="👍")])
-#     await message.answer(
-#         f"Hi!\n" f"Write your name for registration:", reply_markup=name
-#     )
-#     await state.set_state(Registration.name)
+@dp.message(Command("start"))
+async def command_start(message: Message):
+    kb = types.InlineKeyboardMarkup(row_width=2, inline_keyboard=[ 
+        [types.InlineKeyboardButton(text="Member commands", callback_data="mem_com")], 
+        [types.InlineKeyboardButton(text="Group commands", callback_data="grp_com")],
+        [types.InlineKeyboardButton(text="Lessons commands", callback_data="les_com")],
+        [types.InlineKeyboardButton(text="Topics commands", callback_data="top_com")],
+        [types.InlineKeyboardButton(text="Roles commands", callback_data="rol_com")],
+        ])
+    await message.answer("Hello, our user)\nHere's our menu\nChoose what you want to see:",reply_markup=kb)
 
 
-# @dp.message(Registration.name)
-# async def get_name(message: types.Message, state: FSMContext):
-#     type_keyboard = ReplyKeyboardMarkup(
-#         keyboard=[
-#             [
-#                 KeyboardButton(text=f"Student"),
-#                 KeyboardButton(text=f"Teacher"),
-#             ]
-#         ],
-#         resize_keyboard=True,
-#         one_time_keyboard=True,
-#     )
-#     await state.update_data(name=message.text)
-#     await message.answer(
-#         f"<b>{message.text}</b>, now tell us are you a student or are you a teacher",
-#         reply_markup=type_keyboard,
-#     )
-#     await state.set_state(Registration.type)
+
+@dp.callback_query(F.data.startswith("mem_"))
+async def member_commands(query:CallbackQuery):
+    await query.message.answer("/create_member\n/all_members\n/see_one_member\n/delete_all_members\n/update_member\n/delete_one_member")
 
 
-# @dp.message(Registration.type)
-# async def get_age(message: types.Message, state: FSMContext):
-#     answer = message.text
-#     user_id = message.from_user.id
 
-#     data = await state.update_data(type=answer)
-#     await state.clear()
-#     name = data.get("name")
-#     type = data.get("type")
-#     if name in users:
-#         user = users.get(name)
-#         type_check = user.get("type")
-#         if type_check == type:
-#             user_repaired = users.pop(name)
-#             users[user_id] = user_repaired
-#             await message.answer(
-#                 f"Registration succesfully ended.\n" f"Name: {name}\n" f"Type: {type}"
-#             )
-#         else:
-#             await message.answer(f"You are not:{type}")
-
-#     else:
-#         await message.answer("Sorry,we don't know you:(")
+@dp.callback_query(F.data.startswith("grp_"))
+async def group_commands(query:CallbackQuery):
+    await query.message.answer("/create_group\n/all_groups\n/see_one_group\n/delete_all_groups\n/update_group\n/delete_one_group")
 
 
+
+@dp.callback_query(F.data.startswith("top_"))
+async def group_commands(query:CallbackQuery):
+    await query.message.answer("/create_topic\n/all_topics\n/see_one_topic\n/delete_all_topics\n/update_topic\n/delete_one_topic")
+
+
+
+@dp.callback_query(F.data.startswith("rol_"))
+async def group_commands(query:CallbackQuery):
+    await query.message.answer("/create_role\n/all_roles\n/see_one_role\n/delete_all_roles\n/update_role\n/delete_one_role")
+
+
+@dp.callback_query(F.data.startswith("les_"))
+async def group_commands(query:CallbackQuery):
+    await query.message.answer("/create_lesson\n/all_lessons\n/see_one_lesson\n/delete_all_lessons\n/update_lesson\n/delete_one_lesson")
