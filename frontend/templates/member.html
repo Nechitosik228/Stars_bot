@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block title %} Member{% endblock %}
+
+{% block content %}
+
+    <h1> Member Details </h1>
+    <p> Name: {{ member.name }}</p>
+    <p> Email: {{ member.email }}</p>
+    <p> Joined Date: {{ member.joined_data }}</p>
+
+{% endblock %}

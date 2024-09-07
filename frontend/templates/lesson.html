@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+{% block title %} Lesson {% endblock %}
+
+{% block content  %}
+
+    <h1>Lesson Details</h1>
+    <p>Title: {{ lesson.title }}</p>
+    <p>Date: {{ lesson.date }}</p>
+    <div>{{ lesson.content|linebreaks }}</div>
+
+{% endblock %}
+    

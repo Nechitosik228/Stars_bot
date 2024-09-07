@@ -1,0 +1,13 @@
+{% extends 'index.html' %}
+
+    {% block main %}
+        <center>Hello our user this is our home page.</center>
+        <center>Choose what you want to see:</center>
+        {% for command in commands %}
+            <div class="card">
+                <a href="/{{url_for(command)}}" class="card-link">
+                    <h1><b>{{command}}</b></h1>
+                </div>
+            
+        {% endfor %}
+    {% endblock %}
