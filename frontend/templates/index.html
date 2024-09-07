@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт-візитка</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <a href="/about" class="card">
+            <h2>Про нас</h2>
+            <p>Команка програмістів пітон геніус.</p>
+        </a>
+        <a href="/project" class="card">
+            <h2>Про проект</h2>
+            <p>проект зірочки</p>
+        </a>
+        <a href="/contact" class="card">
+            <h2>контакт</h2>
+            <p>телеграм: PYTHON_1y_23_03_10_23</p>
+        </a>
+    </div>
+</body>
+</html>
