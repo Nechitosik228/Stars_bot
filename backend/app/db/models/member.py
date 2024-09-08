@@ -13,8 +13,7 @@ class Member(Config.BASE):
     group: Mapped["Group"] = relationship(back_populates="member")
     group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"))
 
-    
-    
+    lessons: Mapped[List["LessonMembersAssoc"]] = relationship(back_populates="member")
 
 
 # + name: str
