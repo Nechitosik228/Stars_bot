@@ -1,0 +1,22 @@
+{% macro template_form(form) %}
+    <form method="post" action="/">
+        {{ form.hidden_tag() }}
+        {% for field in form %}
+            {% if field.type == 'CSRFTokenField'%}
+                
+            {% elif  field.type == 'SubmitField' %}
+                <div class="mb-3">{{ field(class="form-control") }}</div>
+            {% else %}
+                
+                <div class="mb-3">
+                    {{ field.label(class="form-label") }}
+                    {{ field(class="form-control") }}
+                </div>    
+            {% endif %}
+
+
+        {% endfor %}
+        
+        
+    </form>
+{% endmacro %}
