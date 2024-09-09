@@ -1,0 +1,8 @@
+{# 'login.html' #}
+
+{% extends 'helpers/base.html' %}
+
+{% block content %}
+    {% from 'helpers/form.html' import template_form %}
+    {{ template_form(form) }}
+{% endblock %}
