@@ -4,10 +4,8 @@ import logging
 import asyncio
 from enum import Enum
 from aiogram.fsm.context import FSMContext
-
 from dotenv import load_dotenv
 from loguru import logger
-
 from . utils import request_provider, Method
 from aiogram.fsm.state import State, StatesGroup
 from aiogram import Bot, Dispatcher, types, F
@@ -57,7 +55,7 @@ async def command_start(message: Message):
         [types.InlineKeyboardButton(text="Group commands", callback_data="grp_com")],
         [types.InlineKeyboardButton(text="Lessons commands", callback_data="les_com")],
         [types.InlineKeyboardButton(text="Topics commands", callback_data="top_com")],
-        [types.InlineKeyboardButton(text="Roles commands", callback_data="rol_com")],
+        
         ])
     await message.answer("Hello, our user)\nHere's our menu\nChoose what you want to see:",reply_markup=kb)
 
@@ -81,9 +79,6 @@ async def group_commands(query:CallbackQuery):
 
 
 
-@dp.callback_query(F.data.startswith("rol_"))
-async def group_commands(query:CallbackQuery):
-    await query.message.answer("/create_role\n/all_roles\n/see_one_role\n/delete_all_roles\n/update_role\n/delete_one_role")
 
 
 @dp.callback_query(F.data.startswith("les_"))
