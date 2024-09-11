@@ -1,4 +1,22 @@
 from .. import app_config
+from backend.app import Config
+
+from os import getenv
+from dotenv import load_dotenv
+
+
+
+
+Session = Config.SESSION
+
+
+
+
+
+load_dotenv()
+
+
+BASE_BACKEND_URL = f'http://{getenv("API_HOST")}:{getenv("API_PORT")}'
 
 app = app_config.app
 

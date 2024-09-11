@@ -44,7 +44,7 @@ if __name__ == "__main__":
 
 
 
-from . import lessons,groups,members,topics,roles
+from . import lessons,groups,members,topics,stars_count
 
 
 
@@ -55,7 +55,7 @@ async def command_start(message: Message):
         [types.InlineKeyboardButton(text="Group commands", callback_data="grp_com")],
         [types.InlineKeyboardButton(text="Lessons commands", callback_data="les_com")],
         [types.InlineKeyboardButton(text="Topics commands", callback_data="top_com")],
-        
+        [types.InlineKeyboardButton(text="Stars count commands", callback_data="stars_com")],
         ])
     await message.answer("Hello, our user)\nHere's our menu\nChoose what you want to see:",reply_markup=kb)
 
@@ -74,7 +74,7 @@ async def group_commands(query:CallbackQuery):
 
 
 @dp.callback_query(F.data.startswith("top_"))
-async def group_commands(query:CallbackQuery):
+async def topic_commands(query:CallbackQuery):
     await query.message.answer("/create_topic\n/all_topics\n/see_one_topic\n/delete_all_topics\n/update_topic\n/delete_one_topic")
 
 
@@ -82,5 +82,11 @@ async def group_commands(query:CallbackQuery):
 
 
 @dp.callback_query(F.data.startswith("les_"))
-async def group_commands(query:CallbackQuery):
+async def lesson_commands(query:CallbackQuery):
     await query.message.answer("/create_lesson\n/all_lessons\n/see_one_lesson\n/delete_all_lessons\n/update_lesson\n/delete_one_lesson")
+
+
+
+@dp.callback_query(F.data.startswith("stars_"))
+async def star_count_commands(query:CallbackQuery):
+    await query.message.answer("/create_stars_count\n/see_stars_count\n/update_lesson_member\n/delete_stars_count\n/delete_stars_count_member")

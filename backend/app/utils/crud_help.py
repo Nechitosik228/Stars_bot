@@ -123,7 +123,7 @@ def generate_pydantic_models(
 def generate_crud_routers(pydantic_models: list) -> list[SQLAlchemyCRUDRouter]:
     crud_routers = []
     for model in pydantic_models:
-
+        
         name = model.get("name")
         base_schema = model.get("base_schema")
         update_schema = model.get("update_schema")
@@ -131,7 +131,7 @@ def generate_crud_routers(pydantic_models: list) -> list[SQLAlchemyCRUDRouter]:
         model = get_model(name)
 
         if model:
-
+            print(model)
             router = SQLAlchemyCRUDRouter(
                 schema=base_schema,
                 create_schema=create_schema,

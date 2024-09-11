@@ -15,10 +15,11 @@ from .db import (
     Lesson,
     Role,
     Topic,
+    LessonMember
 )
 
 
-# migrate()  # TODO: Comment this line in production
+migrate()  # TODO: Comment this line in production
 
 app = FastAPI(
     title="Stars Portal API - ",  # TODO: Change the title and description
@@ -34,7 +35,11 @@ db_crud_router = APIRouter()
 # def init_pydantic_models():
 pydantic_models = generate_pydantic_models(
     Config.BASE.metadata,
+    exclude_tables=["lesson_members"]
 )
+
+from . import routes
+
 for router in generate_crud_routers(pydantic_models):
     db_crud_router.include_router(router)
 

@@ -4,12 +4,13 @@ from .member import Member
 from .topic import Topic
 from .lesson import Lesson
 from .group import Group
+from .lesson_members import LessonMember
 
-# from .lesson_members import LessonMembersAssoc
 DB_MODELS = {
     "Roles": Role,
     "Members": Member,
     "Topics": Topic,
     "Lessons": Lesson,
     "Groups": Group,
+    "LessonMembers": LessonMember
 }

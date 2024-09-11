@@ -1,6 +1,6 @@
 from .models import (
     Config,
-    # LessonMembersAssoc,
+    LessonMember,
     Group,
     Lesson,
     Member,
@@ -32,9 +32,11 @@ def get_db():
 
 
 def get_model(name: str = "") -> type | None:
+    print(name)
     db_models = DB_MODELS
 
     if name in db_models:
+        
         model = db_models.get(name)
         if issubclass(model, Config.BASE):
             return model

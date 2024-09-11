@@ -1,4 +1,5 @@
 from .config import Config
+from typing import List
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
@@ -13,7 +14,10 @@ class Member(Config.BASE):
     group: Mapped["Group"] = relationship(back_populates="member")
     group_id: Mapped[int] = mapped_column(ForeignKey("groups.id"))
 
-    lessons: Mapped[List["LessonMembersAssoc"]] = relationship(back_populates="member")
+    # role: Mapped["Role"] = relationship(back_populates="member")
+    # role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
+
+    lesson_members: Mapped[List["LessonMember"]] = relationship(back_populates="member")
 
 
 # + name: str

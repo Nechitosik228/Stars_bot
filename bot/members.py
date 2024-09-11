@@ -141,12 +141,6 @@ async def member_name(message: Message,state: FSMContext):
     await message.answer(f'id:{id}\nName:{resp.get("name")}\ntelegram id:{resp.get("telegram_id")}\ngroup id:{resp.get("group_id")}\nchoose option:', reply_markup=kb)
     await state.clear()
 
-
-# @dp.callback_query("del_m")
-# async def delete__member(message:Message,state:FSMContext):
-
-
-
 @dp.message(Command("update_member"))
 async def update_member(message: Message, state: FSMContext):
     await message.answer("Enter id:")
@@ -166,14 +160,12 @@ async def upd_get_member_id(message: Message, state: FSMContext):
     await state.set_state(UpdateMember.name)
 
 
-
 @dp.message(UpdateMember.name)
 async def upd_get_name(message:Message, state:FSMContext):
     name = message.text
     await state.update_data(name=name)
     await message.answer("Enter new group id:")
     await state.set_state(UpdateMember.group_id)
-
 
 
 @dp.message(UpdateMember.group_id)
@@ -183,8 +175,6 @@ async def upd_get_group_id(message:Message,state:FSMContext):
     await message.answer("Enter new telegram id:")
     await state.set_state(UpdateMember.telegram_id)
     
-
-
 
 @dp.message(UpdateMember.telegram_id)
 async def upd_get_tel_id(message:Message,state:FSMContext):
@@ -202,13 +192,6 @@ async def upd_get_tel_id(message:Message,state:FSMContext):
     await state.clear()
 
     
-
-
-
-
-
-
-
 @dp.message(Command("delete_one_member"))
 async def delete_member(message: Message,state:FSMContext):
     await message.answer("Enter id:")
@@ -217,7 +200,6 @@ async def delete_member(message: Message,state:FSMContext):
 async def delete_member_q(query: CallbackQuery,state:FSMContext):
     await query.message.answer("Enter id:")
     await state.set_state(DeleteMember.id)
-
 
 
 @dp.message(DeleteMember.id)

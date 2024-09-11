@@ -9,6 +9,7 @@ from backend import app
 from bot import dp, bot
 
 
+
 async def run_backend():
     config = Config(app=app, host=getenv("API_HOST"), port=int(getenv("API_PORT")))
     server = Server(config)
@@ -31,5 +32,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+    
     # API_HOST = localhost
     # API_PORT = 4141

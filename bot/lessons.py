@@ -16,7 +16,8 @@ from . import (logging,
                F)
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.filters.callback_data import CallbackData
-import datetime
+
+
 
 
 
@@ -44,13 +45,14 @@ class CreateLesson(StatesGroup):
 
 
 
-def generate_lessons_kb(lessons:list[dict[str:str]]):
-    builder = InlineKeyboardBuilder()
-    for index,lesson in enumerate(lessons):
-        lesson_cb = LessonCallback(date=lesson.get("date"),index=index)
-        builder.button(text=lesson_cb.date,callback_data=lesson_cb)
-    builder.adjust(4,3,2,1)
-    return builder.as_markup()
+# def generate_lessons_kb(lessons:list[dict[str:str]]):
+#     builder = InlineKeyboardBuilder()
+#     for index,lesson in enumerate(lessons):
+        
+#         lesson_cb = LessonCallback(date=date,index=index)
+#         builder.button(text=lesson_cb.date,callback_data=lesson_cb)
+#     builder.adjust(4,3,2,1)
+#     return builder.as_markup()
 
 
 
@@ -60,8 +62,8 @@ def generate_lessons_kb(lessons:list[dict[str:str]]):
 async def see_lessons(message: Message):
     url = BASE_BACKEND_URL + "/lessons"
     resp = await request_provider(url, method=Method.GET)
-    keyboard = generate_lessons_kb(resp)
-    await message.answer("Choose a lesson:",reply_markup=keyboard)
+    
+    await message.answer(f"Choose a lesson:\n{resp}")
 
 
 
