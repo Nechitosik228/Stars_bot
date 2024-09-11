@@ -1,5 +1,56 @@
 {% extends 'helpers/base.html' %}
 
 {% block content %}
-    <li>{{resp}}</li>
+    {% if type == "member" %}
+        {% for item in resp %}
+        <div class="card" style="width: 18rem;">
+        
+            <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-text">telegram id:{{item.telegram_id}},group id:{{item.group_id}}</p>
+            <a href="#" class="btn btn-primary">Update</a>
+            </div>
+        </div>
+        {% endfor %}
+    
+    {% elif type == "lesson" %}
+        {% for item in resp %}    
+        <div class="card" style="width: 18rem;">
+        
+            <div class="card-body">
+            <h5 class="card-title">{{item.date}}</h5>
+            <p class="card-text">topic id:{{item.topic_id}}</p>
+            <a href="#" class="btn btn-primary">Update</a>
+            </div>
+        </div>
+        {% endfor %}
+    
+    {% elif type == "topic" %}
+        {% for item in resp %}    
+        <div class="card" style="width: 18rem;">
+        
+            <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-text">group id:{{item.group_id}}</p>
+            <a href="#" class="btn btn-primary">Update</a>
+            </div>
+        </div>
+        {% endfor %}
+    
+    {% elif type == "group" %}
+        {% for item in resp %}    
+        <div class="card" style="width: 18rem;">
+        
+            <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+            <p class="card-text"></p>
+            <a href="#" class="btn btn-primary">Update</a>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        
+    {% endif %}
+    
+    
 {% endblock %}
