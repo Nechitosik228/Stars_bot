@@ -2,12 +2,29 @@
 
 {% block content %}
     {% if type == "member" %}
+    <h1>Id:{{id}}</h1>
     <h1>Name:{{resp.name}}</h1>
     <h1>Telegram id:{{resp.telegram_id}}</h1>
     <h1>Group id:{{resp.group_id}}</h1>
-    {% elif condition2 %}
-        
+
+    {% elif type == "group" %}
+    <h1>Id:{{id}}</h1>
+    <h1>Name:{{resp.name}}</h1>
+    
+
+    {% elif type == "lesson" %}
+    <h1>Id:{{id}}</h1>
+    <h1>Date:{{resp.date}}</h1>
+    <h1>Topic id:{{resp.topic_id}}</h1>
+
+    {% elif type == "topic" %}
+    <h1>Id:{{id}}</h1>
+    <h1>Name:{{resp.name}}</h1>
+    <h1>Group id:{{resp.group_id}}</h1>
+
     {% else %}
-        
+    <h1>Lesson id:{{id}}</h1>
+    <h1>Member id:{{member_id}}</h1>
+    <h1>Star count:{{resp.stars}}</h1>
     {% endif %}
 {% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'helpers/base.html' %}
+
+{% block content %}
+    <form action="{{url_for(url)}}" method="post">
+        <div>
+            <label for="answer",class="form-label">Are you sure:</label>
+            <input type="text", id="answer", name="answer">
+        </div>
+        <div>
+            <button type="submit", class="btn btn-primary w-50",id="submit">Submit</button>
+        </div>
+    </form>
+{% endblock %}

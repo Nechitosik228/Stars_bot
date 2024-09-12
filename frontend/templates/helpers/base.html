@@ -40,12 +40,12 @@
                                 Member
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/create_member">Create member</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_all_members">See all members</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_one_member">See one member</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/update_member">Update member</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_one_member">Delete one member</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_all_members">Delete all members</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('create_member')}}">Create member</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('see_all_members')}}">See all members</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('see_one_member')}}">See one member</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('update_member')}}">Update member</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('delete_one_member')}}">Delete one member</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('delete_all_members')}}">Delete all members</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -54,12 +54,12 @@
                                 Group
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/create_group">Create group</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_all_groups">See all groups</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_one_group">See one group</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/update_group">Update group</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_one_group">Delete one group</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_all_groups">Delete all groups</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('create_group')}}">Create group</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('see_all_groups')}}">See all groups</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('see_one_group')}}">See one group</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('update_group')}}">Update group</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('delete_one_group')}}">Delete one group</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('delete_all_groups')}}">Delete all groups</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown"></li>
@@ -68,12 +68,12 @@
                                 Topic
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/create_topic">Create topic</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_all_topics">See all topics</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_one_topic">See one topic</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/update_topic">Update topic</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_one_topic">Delete one topic</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_all_topics">Delete all topics</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('create_topic')}}">Create topic</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('see_all_topics')}}">See all topics</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('see_one_topic')}}">See one topic</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('update_topic')}}">Update topic</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('delete_one_topic')}}">Delete one topic</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('delete_all_topics')}}">Delete all topics</a></li>
                             </ul>
                         
                         <li class="nav-item dropdown"></li>
@@ -82,12 +82,12 @@
                                 Lesson
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/create_lesson">Create lesson</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_all_lessons">See all lessons</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_one_lesson">See one lesson</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/update_lesson">Update lesson</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_one_lesson">Delete one lesson</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_all_lessons">Delete all lessons</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('create_lesson')}}">Create lesson</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('see_all_lessons')}}">See all lessons</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('see_one_lesson')}}">See one lesson</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('update_lesson')}}">Update lesson</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('delete_one_lesson')}}">Delete one lesson</a></li>
+                                <li><a class="dropdown-item" href="{{url_for('delete_all_lessons')}}">Delete all lessons</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown"></li>
@@ -96,12 +96,10 @@
                                 Star Counts
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/create_star_count">Create star count</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_all_star_counts">See all star counts</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_one_star_count">See one star count</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/update_star_count">Update star count</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_one_star_count">Delete one star count</a></li>
-                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_all_star_counts">Delete all star counts</a></li>
+                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/create_starcount">Create star count</a></li>
+                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/delete_one_starcount">Delete one star count</a></li>
+                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/see_one_starcount">See one star count</a></li>
+                                <li><a class="dropdown-item" href="http://127.0.0.1:5000/update_starcount">Update star count</a></li>
                             </ul>
                         </li>
                     </ul>

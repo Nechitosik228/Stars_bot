@@ -1,0 +1,98 @@
+{% extends 'helpers/base.html' %}
+
+
+{% block content %}
+    
+    {% if type == "member" %}
+    <form action="{{url_for(url)}}" method="post">
+        <div>
+            <label for="id",class="form-label">Id:</label>
+            <input type="text", id="id", name="id">
+        </div>
+        <div>
+            <label for="name",class="form-label">New name:</label>
+            <input type="text", id="name", name="name">
+        </div>
+        <div>
+            <label for="telegram_id",class="form-label">New telegram id:</label>
+            <input type="text", id="telegram_id", name="telegram_id">
+        </div>
+        <div>
+            <label for="group_id",class="form-label">New group id:</label>
+            <input type="text", id="group_id", name="group_id">
+        </div>
+        <div>
+            <button type="submit", class="btn btn-primary w-50",id="submit">Submit</button>
+        </div>
+    </form>  
+    {% elif type == "group" %}
+    <form action="{{url_for(url)}}" method="post">
+        <div>
+            <label for="id",class="form-label">Id:</label>
+            <input type="text", id="id", name="id">
+        </div>
+        <div>
+            <label for="name",class="form-label">New name:</label>
+            <input type="text", id="name", name="name">
+        </div>
+        <div>
+            <button type="submit", class="btn btn-primary w-50",id="submit">Submit</button>
+        </div>
+    </form>
+    {% elif type == "lesson" %}
+    <form action="{{url_for(url)}}" method="post">
+        <div>
+            <label for="id",class="form-label">Id:</label>
+            <input type="text", id="id", name="id">
+        </div>
+        <div>
+            <label for="date",class="form-label">New date:</label>
+            <input type="text", id="date", name="date">
+        </div>
+        <div>
+            <label for="topic_id",class="form-label">New topic id:</label>
+            <input type="text", id="topic_id", name="topic_id">
+        </div>
+        <div>
+            <button type="submit", class="btn btn-primary w-50",id="submit">Submit</button>
+        </div>
+    </form>
+    {% elif type == "topic" %}
+    <form action="{{url_for(url)}}" method="post">
+        <div>
+            <label for="id",class="form-label">Id:</label>
+            <input type="text", id="id", name="id">
+        </div>
+        <div>
+            <label for="name",class="form-label">New name:</label>
+            <input type="text", id="name", name="name">
+        </div>
+        <div>
+            <label for="group_id",class="form-label">New group id:</label>
+            <input type="text", id="group_id", name="group_id">
+        </div>
+        <div>
+            <button type="submit", class="btn btn-primary w-50",id="submit">Submit</button>
+        </div>
+    </form>
+    {% else %}
+    <form action="{{url_for(url)}}" method="post">
+        <div>
+            <label for="lesson_id",class="form-label">Lesson id:</label>
+            <input type="text", id="lesson_id", name="lesson_id">
+        </div>
+        <div>
+            <label for="member_id",class="form-label">Member id:</label>
+            <input type="text", id="member_id", name="member_id">
+        </div>
+        <div>
+            <label for="star_count",class="form-label">Star count:</label>
+            <input type="text", id="star_count", name="star_count">
+        </div>
+        <div>
+            <button type="submit", class="btn btn-primary w-50",id="submit">Submit</button>
+        </div>
+    </form>
+    {% endif %}
+    
+{% endblock %}

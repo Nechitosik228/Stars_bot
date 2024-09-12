@@ -1,0 +1,30 @@
+{% extends 'helpers/base.html' %}
+
+{% block content %}
+    {% if type == "star_count" %}
+    <form action="{{url_for(url)}}" method="post">
+        <div>
+            <label for="lesson_id",class="form-label">Lesson id:</label>
+            <input type="text", id="lesson_id", name="lesson_id">
+        </div>
+        <div>
+            <label for="member_id",class="form-label">Member id:</label>
+            <input type="text", id="member_id", name="member_id">
+        </div>
+        <div>
+            <button type="submit", class="btn btn-primary w-50",id="submit">Submit</button>
+        </div>
+    </form>  
+    {% else %}
+    <form action="{{url_for(url)}}" method="post">
+        <div>
+            <label for="id",class="form-label">Id:</label>
+            <input type="text", id="id", name="id">
+        </div>
+        <div>
+            <button type="submit", class="btn btn-primary w-50",id="submit">Submit</button>
+        </div>
+    </form> 
+    {% endif %}
+    
+{% endblock %}
